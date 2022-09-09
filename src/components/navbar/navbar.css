@@ -8,7 +8,7 @@
 }
 .navbar .wrapper {
     width: 100%;
-    padding: 20px;
+    padding: 0px 10px 10px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -19,15 +19,15 @@
     align-items: center;
     border-radius: 8px;
     border: 0.5px solid lightgray;
-    padding: 3px;
 }
 .navbar .wrapper .search input {
+    height: 30px;
     border: none;
     outline: none;
     background: transparent;
 }
 .navbar .wrapper .search input::placeholder {
-    font-size:12px;
+    font-size:15px;
 }
 
 .navbar .wrapper .items {

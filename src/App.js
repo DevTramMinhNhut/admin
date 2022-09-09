@@ -3,6 +3,7 @@ import Login from './pages/login/Login';
 import Single from './pages/single/Single';
 import New from './pages/new/New';
 import List from './pages/list/List';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import {
   BrowserRouter,

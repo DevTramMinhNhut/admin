@@ -9,7 +9,7 @@ function Navbar() {
     <div className="navbar">
         <div className="wrapper">
             <div className="search">
-                <input type="text"  placeholder="Tìm kiếm......" />
+                <input type="text" placeholder="Tìm kiếm......" />
                 <FcSearch />
             </div>
             <div className="items">
