@@ -1,0 +1,19 @@
+.App.dark {
+    background-color: #222;
+    color: rgb(156,156,156);
+}
+.App.dark .navbar {
+    border-color: #333;
+    color: #999;
+}
+.App.dark .navbar .search {
+    border-color: gray;
+
+}
+
+.App.dark .sidebar {
+    background-color: #222;
+    color: rgb(156,156,156);
+    border-color: #333;
+
+}

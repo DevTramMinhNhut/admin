@@ -1,11 +1,17 @@
+import Sidebar from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/navbar/Navbar";
 import "./list.css"
+import Datatable from "../../components/datatable/Datatable";
 
 
-function List() {
+const List = ({label, name, title }) => {
     return ( 
         <div className="list">
-            <h1 className="list-title">List</h1>
-            List
+            <Sidebar />
+            <div className="listContainer">
+            <Navbar />
+            <Datatable name={name} label={label} title={title}/>
+            </div>
         </div>
      );
 }
