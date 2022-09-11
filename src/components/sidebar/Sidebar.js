@@ -5,50 +5,52 @@ import { FiUser } from 'react-icons/fi';
 
 
 function Sidebar() {
-    return ( 
-    <div className="sidebar">
-        <div className="top">
-            <Link to="/" style={{textDecoration: 'none'}} >
-            <span className="logo"> Siêu thị mini </span>
-            </Link>
-        </div>
-        <hr />
-        <div className="center">
-            <ul>
-                <p className="title">MAIN</p>
-                <li>
-                    <MdDashboard className="icon" />
-                    <span>DashBoard</span>
-                </li>
-                <p className="title">LIST</p>
-                <Link to="/users" style={{textDecoration: 'none'}} >
-                <li>
-                    <FiUser />
-                    <span>Users</span>
-                </li>
+    return (
+        <div className="sidebar">
+            <div className="top">
+                <Link to="/" className="sidebar__link" >
+                    <span className="logo"> Siêu thị mini </span>
                 </Link>
-                <Link to="/categories" style={{textDecoration: 'none'}} >
+            </div>
+            <hr />
+            <div className="center">
+                <ul>
+                    <p className="title">MAIN</p>
+                    <Link to="/" className="sidebar__link">
+                        <li>
+                            <MdDashboard className="icon" />
+                            <span>DashBoard</span>
+                        </li>
+                    </Link>
+                    <p className="title">LIST</p>
+                    <Link to="/users" className="sidebar__link" >
+                        <li>
+                            <FiUser />
+                            <span>Users</span>
+                        </li>
+                    </Link>
+                    <Link to="/categories" className="sidebar__link" >
+                        <li>
+                            <span>Categories</span>
+                        </li>
+                    </Link>
+                    <Link to="/products" className="sidebar__link" >
+                        <li>
+                            <span>Products</span>
+                        </li>
+                    </Link>
                     <li>
-                    <span>Category</span>
+                        <span>Orders</span>
                     </li>
-                </Link>
-                <Link to="/products" style={{textDecoration: 'none'}} >
-                    <li>
-                    <span>Product</span>
-                    </li>
-                </Link>
-                <li>
-                <span>Orders</span>
-                </li>
-            </ul>
-        </div>
-        <div className="bottom">
-            <div className="colorOption"></div>
-            <div className="colorOption"></div>
-        </div>
+                </ul>
+            </div>
+            <div className="bottom">
+                <div className="colorOption"></div>
+                <div className="colorOption"></div>
+            </div>
 
-    </div>
-     );
+        </div>
+    );
 }
 
 export default Sidebar;

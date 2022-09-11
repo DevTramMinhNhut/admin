@@ -2,6 +2,7 @@
     flex: 1;
     border-right: 0.5px solid bisque;
     min-height: 100vh;
+    min-width: 174px;
     background-color: white;
 }
 .sidebar .top {
@@ -80,4 +81,8 @@
 }
 .sidebar .bottom .colorOption:nth-child(2) {
     background-color: #333;
+ }
+
+ .sidebar__link{
+    text-decoration: none;
  }
