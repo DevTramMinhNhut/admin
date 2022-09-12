@@ -1,29 +1,10 @@
-import Login from './pages/login/Login';
-import Single from './pages/single/Single';
-import New from './pages/new/New';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./style/dark.css";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "./App.css";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Outlet,
-} from "react-router-dom";
-import { categoryInputs } from './formSource';
-import { categoryTitle, productTitle } from './titleSource';
-import Categories from './pages/categories/Categories';
-import Products from './pages/products/Products';
-import Home from './pages/home/Home';
-import Sidebar from './components/sidebar/Sidebar';
-import Navbar from './components/navbar/Navbar';
-import Widget from './components/widget/Widget';
-import Featured from './components/featured/Featured';
-import Chart from './components/chart/Chart';
-import Tableadmin from './components/tableadmin/Tableadmin';
-import Users from './pages/users/Users';
-
+import { Outlet } from "react-router-dom";
+import Sidebar from "./components/sidebar/Sidebar";
+import Navbar from "./components/navbar/Navbar";
 
 function App() {
   const [dark, setDark] = useState(false);
@@ -35,14 +16,14 @@ function App() {
         <Navbar />
         <Outlet />
       </div>
-    </div >
+    </div>
   );
 }
 
 export default App;
 
-
-{/* <Route path="/">
+{
+  /* <Route path="/">
             <Route index element={<Home setDark={setDark} />} />
             <Route path="login" element={<Login setDark={setDark} />} />
             <Route path="list" >
@@ -72,4 +53,5 @@ export default App;
               <Route path=":categoryID" element={<Single />} />
               <Route path="new" element={<New inputs={categoryInputs} title="Add New Category" />} />
             </Route>
-          </Route> */}
+          </Route> */
+}

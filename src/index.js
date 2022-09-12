@@ -1,25 +1,11 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom/client';
-// import App from './App';
-
-
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
-//   <React.StrictMode>
-//     <BrowserRouter>
-//       <Routes>
-//         <App />
-//       </Routes>
-//     </BrowserRouter >
-//   </React.StrictMode>
-// );
-
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import App from './App';
 import Categories from './pages/categories/Categories';
+import UpdateCategory from './pages/categories/UpdateCategory';
+import CreateCategory from './pages/categories/CreateCategory';
+
 import Home from './pages/home/Home';
 import Products from './pages/products/Products';
 import CreateUser from './pages/users/CreateUser';
@@ -40,6 +26,9 @@ root.render(
           <Route path="/users/update-user/:user_id" element={<UpdateUser />} />
 
           <Route path="/categories" element={<Categories />} />
+          <Route path="/categories/create-category" element={<CreateCategory />} />
+          <Route path="/categories/update-category/:category_id" element={<UpdateCategory />} />
+
 
           <Route path="/products" element={<Products />} />
 

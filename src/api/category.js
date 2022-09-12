@@ -7,3 +7,4 @@ export const get = async (path, option = {}) => {
         //todo write log
     }
 };
+
