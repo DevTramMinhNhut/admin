@@ -39,9 +39,22 @@ function Sidebar() {
                             <span>Products</span>
                         </li>
                     </Link>
-                    <li>
-                        <span>Orders</span>
-                    </li>
+                    <Link to="/discount" className="sidebar__link" >
+                        <li>
+                            <span>Discount product</span>
+                        </li>
+                    </Link>
+                    <Link to="/staff" className="sidebar__link" >
+                        <li>
+                            <span>Staff</span>
+                        </li>
+                    </Link>
+                    <Link to="/customer" className="sidebar__link" >
+                        <li>
+                            <span>Customer</span>
+                        </li>
+                    </Link>
+                  
                 </ul>
             </div>
             <div className="bottom">

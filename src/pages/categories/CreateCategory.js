@@ -32,14 +32,17 @@ function CreateCategory() {
     newData[e.target.name] =  e.target.files[0];
     setData(newData);
   }
+  console.log(data)
   const handleSubmit = async(event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
+
     setValidated(true);
         if(form.checkValidity() === true){
+          event.preventDefault();
           axios.post(`http://localhost:3000/categories/`, 
           { 
             category_name: data.category_name,
@@ -54,8 +57,8 @@ function CreateCategory() {
             alert('Bạn thêm sản phẩm thành công!')
             navigate('/categories/')
           })
-          .catch(err => {
-            console.log(err);
+          .catch(err  => {
+            console.log(err.response);
             alert('Bạn nhập sai thông tin vui lòng nhập lại')
           });
       }
@@ -71,7 +74,7 @@ function CreateCategory() {
           <div className="new-container-bottom__left">
             <Form noValidate validated={validated} onSubmit={handleSubmit} >
               <Row className="mb-4">
-                <Form.Group as={Col} md="7" controlId="validationCustom01">
+                <Form.Group as={Col} style={{width: '60%'}} md="7" controlId="validationCustom01">
                   <Form.Label>Category name</Form.Label>
                   <Form.Control
                     required

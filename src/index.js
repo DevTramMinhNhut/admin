@@ -12,6 +12,14 @@ import CreateUser from './pages/users/CreateUser';
 import UpdateUser from './pages/users/UpdateUser';
 import Users from './pages/users/Users';
 
+//products
+import CreateProduct from './pages/products/CreateProduct';
+import UpdateProduct from './pages/products/UpdateProduct';
+import DetailProduct from './pages/products/DetailProduct';
+
+//customer
+import Customer from './pages/customer/Customer';
+import DetailCustomer from './pages/customer/DetailCustomer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -29,8 +37,13 @@ root.render(
           <Route path="/categories/create-category" element={<CreateCategory />} />
           <Route path="/categories/update-category/:category_id" element={<UpdateCategory />} />
 
-
           <Route path="/products" element={<Products />} />
+          <Route path="/products/create-product" element={<CreateProduct />} />
+          <Route path="/products/detailProduct/:product_id" element={<DetailProduct />} />
+          <Route path="/products/update-product/:product_id" element={<UpdateProduct />} />
+
+          <Route path="/customer" element={<Customer />} />
+          <Route path="/customer/customerDetail/:customer_id" element={<DetailCustomer />} />
 
         </Route>
       </Routes>

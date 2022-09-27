@@ -1,4 +1,4 @@
-.app{
+.app {
   display: flex;
 }
 
@@ -6,7 +6,8 @@
   flex: 6;
 }
 
-.app-container .widgets, .charts {
+.app-container .widgets,
+.charts {
   display: flex;
   padding: 20px;
   gap: 20px;
@@ -16,29 +17,43 @@
   padding: 5px 20px;
 }
 
-.data-table{
+.data-table {
   padding: 16px;
 }
 
-.data-table__heading{
+.data-table__heading {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
-  -webkit-box-shadow: 2px 4px 10px 1px rgba(0,0,0,0.47);
-  box-shadow: 2px 4px 10px 1px rgba(201,201,201,0.47);
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
   padding: 12px;
   border-radius: 4px;
   /* margin: 20px; */
 }
 
-.data-table__title{
+.data-table__title {
   font-size: 24px;
 }
 
-.link{
+.link {
   text-decoration: none;
 }
 
+.data-table__heading--manipulation {
+  width: 115px;
+}
+
+.data-table__heading--img {
+  max-width: 100px;
+  max-height: 70px;
+  justify-items: center;
+}
+.data-table__heading--button {
+  align-items: center;
+  justify-content: center;
+  margin-top: 11px;
+}
 
 /* add */
 .new-container {
@@ -46,16 +61,16 @@
 }
 
 .new-container-top {
-  -webkit-box-shadow: 2px 4px 10px 1px rgba(0,0,0,0.47);
-  box-shadow: 2px 4px 10px 1px rgba(201,201,201,0.47);
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
   padding: 10px;
   margin: 20px;
   display: flex;
 }
 
 .new-container-bottom {
-  -webkit-box-shadow: 2px 4px 10px 1px rgba(0,0,0,0.47);
-  box-shadow: 2px 4px 10px 1px rgba(201,201,201,0.47);
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
   padding: 10px;
   margin: 20px;
   display: flex;
@@ -70,7 +85,6 @@
   flex: 2;
 }
 
-
 .new-container-bottom__right {
   flex: 1;
   text-align: center;
@@ -82,5 +96,18 @@
   border: 1px solid darkgray;
   object-fit: cover;
   background-color: darkgray;
-  
 }
+.new-container-bottom__right--img--des {
+  padding-top: 20px;
+}
+.new-container-bottom__right--img--des-col {
+  margin-right: 8px;
+  width: 100px;
+  height: 100px;
+}
+.new-container-bottom__right--img--des-col-img {  
+  display: block;
+  width: 120%;
+  height: auto; 
+}
+
