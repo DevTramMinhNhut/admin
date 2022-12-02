@@ -1,19 +1,20 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style/dark.css";
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import "./App.css";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./components/sidebar/Sidebar";
-import Navbar from "./components/navbar/Navbar";
+import NavbarAdmin from "./components/navbar/Navbar";
+import { DarkModeContext } from "./context/darkModeContext";
 
 function App() {
-  const [dark, setDark] = useState(false);
+  const {darkMode} = useContext(DarkModeContext);
 
   return (
-    <div className={dark ? "app dark" : "app"}>
+    <div className={darkMode ? "app dark" : "app"}>
       <Sidebar />
       <div className="app-container">
-        <Navbar />
+        <NavbarAdmin />
         <Outlet />
       </div>
     </div>

@@ -9,6 +9,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import * as categoryAPI from "../../api/category";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // import { Link } from "react-router-dom";
 
@@ -75,11 +77,21 @@ function UpdateCategory() {
           }
         )
         .then((res) => {
-          alert("Bạn sửa sản phẩm thành công!");
-          navigate("/categories/");
+          toast("Update category success", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+          });
+          setTimeout(() => {
+            navigate('/categories/')
+          }, 3000);
         })
         .catch((err) => {
-          alert("Bạn nhập sai thông tin vui lòng nhập lại");
+          toast.error("Update category failed");
         });
     }
   };
@@ -128,6 +140,17 @@ function UpdateCategory() {
               readOnly
             />
             <Button type="submit">Lưu</Button>
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover={false}
+            />
           </Form>
         </div>
         <div className="new-container-bottom__right">

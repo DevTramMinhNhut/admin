@@ -1,9 +1,8 @@
 .sidebar {
     flex: 1;
-    border-right: 0.5px solid bisque;
+    border-right: 1px solid #000;
     min-height: 100vh;
     min-width: 174px;
-    background-color: white;
 }
 .sidebar .top {
     height: 50px;
@@ -14,12 +13,9 @@
 .sidebar .top .logo {
   font-size: 20px;
   font-weight: bold;
-  color: red;
+  color: #008400;
 }
-.sidebar hr {
-    height: 0;
-    border: 0.5px solid lightgray;
-}
+
 
 .sidebar .center {
     padding-left: 10px;
@@ -29,14 +25,15 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    margin-left: -10px;
 }
 
 .sidebar .center ul .title {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: bold;
-    color: #999;
     margin-top: 15px;
     margin-bottom: 8px;
+    margin-left: 10px;
 }
 
 .sidebar .center ul li{
@@ -45,22 +42,20 @@
     padding: 5px;
     /* con cho chuot hinh ban tay */
     cursor: pointer;
-}
-
-.sidebar .center ul li:hover{
-    background-color: #ece8ff;
+    border-bottom: 1px solid #000;
 }
 
 .sidebar .center ul li .icon{
-    font-size: 23px;
-    color: #7451f8;
+    font-size: 30px;
+    color: #008400;
+    margin-left: 10px;
 }
 
 .sidebar .center ul li span{
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
-    color: #888;
-    margin-left: 10px;
+    color: #000;
+    margin-left: 20px;
 }
 
 .sidebar .bottom {
@@ -86,3 +81,8 @@
  .sidebar__link{
     text-decoration: none;
  }
+
+.icon1 {
+    color: #008400;
+    margin-left: 10px;
+}

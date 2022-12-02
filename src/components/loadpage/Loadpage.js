@@ -1,14 +1,18 @@
-import React from 'react';
-function Loadpage() {
-    return (
-        <div className="w-full h-screen bg-white flex justify-center items-center">
-            <img
-                src="/img/2020Covfefe.gif"
-                alt="logoPhanCoffeeGif"
-                className="w-[400px] h-[400px]"
-            />
-        </div>
-    );
+import React from "react";
+import anh2 from "../../style/img/chieu-nay-khong-co-mua.gif";
+function LoadPage() {
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        textAlign: 'center',
+        marginTop: '100px'
+      }}
+    >
+      <img src={anh2} alt="logo" />
+    </div>
+  );
 }
 
-export default Loadpage;
+export default LoadPage;

@@ -1,10 +1,11 @@
 import React from "react";
 import * as customerApi from "../../api/customer";
 import { useState, useEffect } from "react";
-import Loadpage from "../../components/loadpage/Loadpage";
+import LoadPage from "../../components/loadpage/LoadPage";
 import { Link } from "react-router-dom";
-import { Button, Table } from "react-bootstrap";
+import { Button, OverlayTrigger, Table, Tooltip } from "react-bootstrap";
 import moment from "moment";
+import CheckPagination from "../../components/Pagination/CheckPagination";
 
 import { BiDetail } from "react-icons/bi";
 
@@ -13,14 +14,25 @@ function Customer() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchAPI = async () => {
-      const data = await customerApi.get("customer");
+      const data = await customerApi.get("customer?limit=1000");
       setCustomers(data.customers);
       setLoading(false);
     };
     fetchAPI();
   }, []);
 
-  if (loading) return <Loadpage />;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage] = useState(7);
+  // Get current 
+  const indexOfLast = currentPage * perPage;
+  const indexOfFirst = indexOfLast - perPage;
+  const current = customers.slice(indexOfFirst, indexOfLast);
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginateNext = () => setCurrentPage(currentPage + 1);
+  const paginatePrev = () => setCurrentPage(currentPage - 1);
+
+  if (loading) return <LoadPage />;
   else
     return (
       <div className="data-table">
@@ -40,7 +52,7 @@ function Customer() {
             </tr>
           </thead>
           <tbody>
-            {customers.map((customer, index) => {
+            {current.map((customer, index) => {
               return (
                 <tr key={index}>
                   <td>{customer.customer_id}</td>
@@ -53,23 +65,37 @@ function Customer() {
                   <td>{customer.customer_phone}</td>
                   <td>{customer.customer_phone}</td>
                   <td>
-                    <Link
-                      to={`/customer/customerDetail/${customer.customer_id}`}
-                      className="link"
+                    <OverlayTrigger
+                      placement="bottom"
+                      overlay={<Tooltip id="tooltip-disabled">Update</Tooltip>}
                     >
-                      <Button
-                        // className="data-table__heading--button"
-                        variant="outline-warning"
-                      >
-                        <BiDetail />
-                      </Button>
-                    </Link>
+                      <span className="d-inline-block">
+                        <Link
+                          to={`/customer/customerDetail/${customer.customer_id}`}
+                          className="link"
+                        >
+                          <Button
+                            // className="data-table__heading--button"
+                            variant="outline-warning"
+                          >
+                            <BiDetail />
+                          </Button>
+                        </Link>
+                      </span>
+                    </OverlayTrigger>
                   </td>
                 </tr>
               );
             })}
           </tbody>
         </Table>
+        <CheckPagination
+        postsPerPage={perPage}
+        totalPosts={customers.length}
+        paginate={paginate}
+        paginateNext={paginateNext}
+        paginatePrev={paginatePrev}
+      />
       </div>
     );
 }

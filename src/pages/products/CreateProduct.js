@@ -8,6 +8,8 @@ import axios from "axios";
 
 import { useNavigate } from "react-router-dom";
 import * as categoryApi from "../../api/category";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // import { Link } from "react-router-dom";
 
@@ -39,19 +41,18 @@ function CreateProduct() {
       filesLength.push(files[i]);
     }
   }
-  console.log(filesLength);
-
   const formData = new FormData();
 
   formData.append("product_name", productName);
   formData.append("category_id", categoryId);
   formData.append("product_describe", describe);
-  formData.append("product_price", price);
+  formData.append("product_price", parseInt(price));
   formData.append("provider", provider);
-  formData.append("product_quantity", quantity);
+  formData.append("product_quantity", parseInt(quantity));
 
   const handleSubmit = async (event) => {
     const form = event.currentTarget;
+
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
@@ -69,14 +70,21 @@ function CreateProduct() {
           },
         })
         .then((res) => {
-          alert("Bạn thêm sản phẩm thành công!");
-          console.log(res);
-          navigate("/products/");
+          toast("Create product success", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+          });
+          setTimeout(() => {
+            navigate("/products/");
+          }, 3000);
         })
         .catch((err) => {
-          console.log(err);
-
-          alert("Bạn nhập sai thông tin vui lòng nhập lại");
+          toast.error("Create product failed");
         });
     }
   };
@@ -125,7 +133,7 @@ function CreateProduct() {
                   type="text"
                   name="product_price"
                   placeholder="Price"
-                  onChange={(e) => setDescribe(e.target.value)}
+                  onChange={(e) => setPrice(e.target.value)}
                 />
               </Form.Group>
               <Form.Group as={Col} md="5" controlId="validationCustom04">
@@ -135,7 +143,7 @@ function CreateProduct() {
                   type="text"
                   name="product_quantity"
                   placeholder="Quantity of product"
-                  onChange={(e) => setProvider(e.target.value)}
+                  onChange={(e) => setQuantity(e.target.value)}
                 />
               </Form.Group>
             </Row>
@@ -147,7 +155,7 @@ function CreateProduct() {
                   type="text"
                   name="provider"
                   placeholder="provider"
-                  onChange={(e) => setPrice(e.target.value)}
+                  onChange={(e) => setProvider(e.target.value)}
                 />
               </Form.Group>
             </Row>
@@ -159,7 +167,7 @@ function CreateProduct() {
                 <Form.Label>Describe</Form.Label>
                 <Form.Control
                   name="product_describe"
-                  onChange={(e) => setQuantity(e.target.value)}
+                  onChange={(e) => setDescribe(e.target.value)}
                   as="textarea"
                   rows={5}
                 />
@@ -180,6 +188,17 @@ function CreateProduct() {
               />
             </Form.Group>
             <Button type="submit">Lưu</Button>
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover={false}
+            />
           </Form>
         </div>
         <div className="new-container-bottom__right">
@@ -195,7 +214,8 @@ function CreateProduct() {
           {files ? (
             <Row className="new-container-bottom__right--img--des">
               {filesLength.map((filesLength, index) => (
-                <Col xs={4}
+                <Col
+                  xs={4}
                   key={index}
                   className="new-container-bottom__right--img--des-col"
                 >
@@ -203,7 +223,7 @@ function CreateProduct() {
                     className="new-container-bottom__right--img--des-col-img"
                     src={
                       files
-                        ? URL.createObjectURL(files[index ])
+                        ? URL.createObjectURL(files[index])
                         : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT8-e9Jpr1AyNwkdf_iE_zQjknFwrn3kBbQQ&usqp=CAU"
                     }
                     alt=""

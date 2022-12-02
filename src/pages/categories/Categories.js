@@ -1,45 +1,88 @@
 import React from "react";
-import * as categoryApi from '../../api/category';
+import * as categoryApi from "../../api/category";
 import { useState, useEffect } from "react";
-import Loadpage from "../../components/loadpage/Loadpage";
+import LoadPage from "../../components/loadpage/LoadPage";
 import { Link } from "react-router-dom";
-import { Button, Table } from "react-bootstrap";
+import {
+  Button,
+  Form,
+  InputGroup,
+  OverlayTrigger,
+  Table,
+  Tooltip,
+} from "react-bootstrap";
 
-import {GrUpdate} from "react-icons/gr";
-import {AiTwotoneDelete} from "react-icons/ai";
-import axios from 'axios';
-
+import { GrUpdate } from "react-icons/gr";
+import { AiOutlineSearch, AiTwotoneDelete } from "react-icons/ai";
+import axios from "axios";
+import { toast } from "react-toastify";
+import CheckPagination from "../../components/Pagination/CheckPagination";
+import moment from "moment/moment";
 
 function Categories() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleteC, setDeletC] = useState(false);
+  const [searchName, setSearchName] = useState();
   useEffect(() => {
     const fetchAPI = async () => {
-      const data = await categoryApi.get("categories");
+      let data;
+      if (searchName !== undefined) {
+        data = await categoryApi.get(`categories?category_name=${searchName}&?limit=100`);
+      } else {
+        data = await categoryApi.get("categories");
+      }
       setCategories(data.categories);
       setLoading(false);
       setDeletC(false);
     };
     fetchAPI();
-  }, [deleteC]);
+  }, [deleteC, searchName]);
 
   const deleteCategory = (category_id) => {
-    const agreeDelete = window.confirm(`Bạn có muốn xóa category id: ${category_id} không ??`);
+    const agreeDelete = window.confirm(
+      `Do you want to delete category id Do you want to delete staff not ??`
+    );
     if (agreeDelete) {
-      axios.delete(`http://localhost:3000/categories/${category_id}`)
-      window.alert(`Bạn đã xóa thành công category id: ${category_id}`);
+      axios.delete(`http://localhost:3000/categories/${category_id}`);
+      toast.success("Delete category successfully");
       setDeletC(true);
     }
     return 0;
   };
 
-  if (loading) return <Loadpage />;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage] = useState(4);
+  // Get current
+  const indexOfLast = currentPage * perPage;
+  const indexOfFirst = indexOfLast - perPage;
+  const current = categories.slice(indexOfFirst, indexOfLast);
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginateNext = () => setCurrentPage(currentPage + 1);
+  const paginatePrev = () => setCurrentPage(currentPage - 1);
+
+  if (loading) return <LoadPage />;
   else
     return (
       <div className="data-table">
         <div className="data-table__heading">
           <span className="data-table__title">List Categories</span>
+
+          <InputGroup
+            onChange={(e) => setSearchName(e.target.value)}
+            size="sm"
+            className="mt-1"
+            style={{ width: "30%", height: "70%" }}
+          >
+            <Form.Control
+              placeholder="Search product by name"
+              aria-describedby="basic-addon2"
+            />
+            <Button variant="outline-secondary" id="button-addon2">
+              <AiOutlineSearch size={25} />
+            </Button>
+          </InputGroup>
           <Link
             to="/categories/create-category"
             style={{ textDecoration: "none" }}
@@ -60,36 +103,80 @@ function Categories() {
             </tr>
           </thead>
           <tbody>
-            {categories.map((category, index) => {
-                return (
+            {current.map((category, index) => {
+              return (
                 <tr key={index}>
-                    <td>{category.category_id}</td>
-                    <td>{category.category_name}</td>
-                    <td style={{ width: '120px', height: '84px' }} > 
-                      <img className="data-table__heading--img" src= {`http://127.0.0.1:8887//${category.category_img}`} 
-                      alt="Lỗi" /></td>
-                    <td>{category.createdAt}</td>
-                    <td>{category.updatedAt}</td>
-                    <td >
-                    <Link
-                        to={`/categories/update-category/${category.category_id}`}
-                        className="link"
+                  <td>{category.category_id}</td>
+                  <td>{category.category_name}</td>
+                  <td style={{ width: "120px", height: "84px" }}>
+                    <img
+                      className="data-table__heading--img"
+                      src={`http://127.0.0.1:8887//${category.category_img}`}
+                      alt="Lỗi"
+                    />
+                  </td>
+                  <td>
+                    {moment(category.createdAt)
+                      .utc()
+                      .format("DD-MM-YYYY H:mm:ss")}
+                  </td>
+                  <td>
+                    {moment(category.updatedAt)
+                      .utc()
+                      .format("DD-MM-YYYY H:mm:ss")}
+                  </td>
+                  <td>
+                    <OverlayTrigger
+                      placement="bottom"
+                      overlay={<Tooltip id="tooltip-disabled">Update</Tooltip>}
                     >
-                        <Button className="data-table__heading--button" variant="outline-warning">
-                          <GrUpdate />
+                      <span className="d-inline-block">
+                        <Link
+                          to={`/categories/update-category/${category.category_id}`}
+                          className="link"
+                        >
+                          <Button
+                            className="data-table__heading--button"
+                            variant="outline-warning"
+                          >
+                            <GrUpdate />
+                          </Button>
+                        </Link>
+                      </span>
+                    </OverlayTrigger>
+
+                    <OverlayTrigger
+                      placement="bottom"
+                      overlay={<Tooltip id="tooltip-disabled">Delete</Tooltip>}
+                    >
+                      <span className="d-inline-block">
+                        <Button
+                          className="data-table__heading--button"
+                          style={{ marginLeft: "10px" }}
+                          variant="outline-danger"
+                          onClick={() => deleteCategory(category.category_id)}
+                        >
+                          <AiTwotoneDelete />
                         </Button>
-                    </Link>
-                    <Button className="data-table__heading--button" style={{float: 'right'}}
-                        variant="outline-danger"
-                        onClick={() => deleteCategory(category.category_id)}
-                    >
-                        <AiTwotoneDelete />
-                    </Button>
-                    </td>
+                      </span>
+                    </OverlayTrigger>
+                  </td>
                 </tr>
-                )})}
+              );
+            })}
           </tbody>
         </Table>
+        {categories.length > 6 ? (
+          <CheckPagination
+            postsPerPage={perPage}
+            totalPosts={categories.length}
+            paginate={paginate}
+            paginateNext={paginateNext}
+            paginatePrev={paginatePrev}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     );
 }

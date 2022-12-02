@@ -10,7 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import * as categoryApi from "../../api/category";
 import * as productApi from "../../api/product";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import { Link } from "react-router-dom";
 
 function UploadProduct() {
@@ -106,24 +107,29 @@ function UploadProduct() {
     });
     if (form.checkValidity() === true) {
       event.preventDefault();
-      console.log(formData.get('product_name'))
+      console.log(formData.get("product_name"));
       axios
-        .put(
-          `http://localhost:3000/product/${product_id}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
+        .put(`http://localhost:3000/product/${product_id}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((res) => {
-          alert("Bạn thêm sữa phẩm thành công!");
-          navigate("/products/");
+          toast("Update product success", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+          });
+          setTimeout(() => {
+            navigate("/products/");
+          }, 3000);
         })
         .catch((err) => {
-          console.log(err);
-          alert("Bạn nhập sai thông tin vui lòng nhập lại");
+          toast.error("Update product failed");
         });
     }
   };
@@ -234,6 +240,17 @@ function UploadProduct() {
               />
             </Form.Group>
             <Button type="submit">Lưu</Button>
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover={false}
+            />
           </Form>
         </div>
         <div className="new-container-bottom__right">

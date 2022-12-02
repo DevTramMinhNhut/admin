@@ -5,6 +5,8 @@ import Form from "react-bootstrap/Form";
 
 import Row from "react-bootstrap/Row";
 import axios from 'axios';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { useNavigate } from 'react-router-dom';
 
@@ -32,7 +34,6 @@ function CreateCategory() {
     newData[e.target.name] =  e.target.files[0];
     setData(newData);
   }
-  console.log(data)
   const handleSubmit = async(event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -54,12 +55,21 @@ function CreateCategory() {
             }
           })
           .then(res => {
-            alert('Bạn thêm sản phẩm thành công!')
-            navigate('/categories/')
+            toast("Create category success", {
+              position: "top-right",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+            });
+            setTimeout(() => {
+              navigate('/categories/')
+            }, 3000);
           })
           .catch(err  => {
-            console.log(err.response);
-            alert('Bạn nhập sai thông tin vui lòng nhập lại')
+            toast.error("Create category failed");
           });
       }
     
@@ -100,6 +110,17 @@ function CreateCategory() {
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
               <Button type="submit">Lưu</Button>
+              <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover={false}
+            />
             </Form>
           </div>
           <div className="new-container-bottom__right">
