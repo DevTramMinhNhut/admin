@@ -23,6 +23,7 @@ function Password({ setShowModalPassword, authorId }) {
       setStaff(data.staff);
     };
     fetchAPI();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
