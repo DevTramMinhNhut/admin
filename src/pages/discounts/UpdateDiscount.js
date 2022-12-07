@@ -67,7 +67,7 @@ function UpdateDiscount() {
           discount_end: discountEnd,
         })
         .then((res) => {
-          toast("Update sus", {
+          toast("Update discount success", {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,

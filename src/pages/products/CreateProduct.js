@@ -18,7 +18,7 @@ function CreateProduct() {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     const fetchAPI = async () => {
-      const data = await categoryApi.get("categories");
+      const data = await categoryApi.get("category?limit=100");
       setCategories(data.categories);
     };
     fetchAPI();
@@ -34,7 +34,7 @@ function CreateProduct() {
   const [price, setPrice] = useState();
   const [provider, setProvider] = useState();
   const [quantity, setQuantity] = useState();
-  console.log(files);
+
   const filesLength = [];
   if (files) {
     for (let i = 0; i < files.length; i++) {
@@ -64,15 +64,15 @@ function CreateProduct() {
     if (form.checkValidity() === true) {
       event.preventDefault();
       axios
-        .post(`http://localhost:3000/product/`, formData, {
+        .post(`http://localhost:3000/product/`,formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         })
         .then((res) => {
-          toast("Create product success", {
+          toast.success("Create product success", {
             position: "top-right",
-            autoClose: 2000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: false,

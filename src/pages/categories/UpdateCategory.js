@@ -26,7 +26,7 @@ function UpdateCategory() {
   useEffect(() => {
     const fetchAPI = async () => {
       const data = await categoryAPI.get(
-        `categories?category_id=${category_id}`
+        `category?category_id=${category_id}`
       );
       setCategory(data.categories[0]);
     };
@@ -65,7 +65,7 @@ function UpdateCategory() {
       event.preventDefault();
       axios
         .put(
-          `http://localhost:3000/categories/${category_id}`,
+          `http://localhost:3000/category/${category_id}`,
           {
             category_name: data.category_name,
             category_img: data.category_img,
@@ -77,9 +77,9 @@ function UpdateCategory() {
           }
         )
         .then((res) => {
-          toast("Update category success", {
+          toast.success("Update category success", {
             position: "top-right",
-            autoClose: 2000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: false,

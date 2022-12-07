@@ -32,9 +32,13 @@ function Products() {
     const fetchAPI = async () => {
       let data;
       if (searchName !== undefined) {
-        data = await productApi.get(`product?product_name=${searchName}&?limit=500`);
+        data = await productApi.get(
+          `product?product_name=${searchName}&?limit=500`
+        );
       } else if (searchCategory !== undefined) {
-        data = await productApi.get(`product?category_id=${searchCategory}&?limit=500`);
+        data = await productApi.get(
+          `product?category_id=${searchCategory}&?limit=500`
+        );
       } else {
         data = await productApi.get("product?limit=500");
       }
@@ -48,7 +52,7 @@ function Products() {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     const fetchAPI = async () => {
-      const data = await categoryApi.get("categories");
+      const data = await categoryApi.get("category");
       setCategories(data.categories);
     };
     fetchAPI();
@@ -56,7 +60,7 @@ function Products() {
 
   const deleteProduct = (product_id) => {
     const agreeDelete = window.confirm(
-      `Bạn có muốn xóa product id: ${product_id} không ??`
+      `Do you want to delete product: ${product_id} ??`
     );
     if (agreeDelete) {
       axios.delete(`http://localhost:3000/product/${product_id}`);
@@ -150,14 +154,14 @@ function Products() {
                   </td>
                   <td>{product.storage.product_quantity}</td>
                   <td>{product.storage.product_sold}</td>
-                  <td>
+                  <td style={{ textAlign: "center" }}>
                     <OverlayTrigger
                       placement="bottom"
                       overlay={<Tooltip id="tooltip-disabled">comment</Tooltip>}
                     >
                       <span className="d-inline-block">
                         <Link
-                          to={`/discounts/createDiscount/${product.product_id}`}
+                          to={`/products/${product.product_id}/comment`}
                           className="link"
                         >
                           <Button
@@ -170,7 +174,7 @@ function Products() {
                       </span>
                     </OverlayTrigger>
                   </td>
-                  <td>
+                  <td style={{ textAlign: "center" }}>
                     <OverlayTrigger
                       placement="bottom"
                       overlay={

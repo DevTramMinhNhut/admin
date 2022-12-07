@@ -48,7 +48,7 @@ const Login = () => {
     id: "",
     username: "",
   };
-  const findFormErrors = async () => {
+  const findFormErrors = () => {
     const { username, password } = form;
     const newErrors = {};
     // name errors
@@ -62,6 +62,7 @@ const Login = () => {
         if (checkUsername.includes(username) === true) {
           if (check.username === username) {
             authLogin.id = checkId;
+         
           }
           const checkPassword = bcrypt.compareSync(password, check.password);
           if (checkPassword === false) {
@@ -73,23 +74,13 @@ const Login = () => {
     if (checkUsername.includes(username) === false) {
       newErrors.username = "Tên đăng nhập không tồn tại";
     }
-
     return newErrors;
   };
-
-  // const [findStaff, setFindStaff] = useState([]);
-  // useEffect(() => {
-  //   console.log(authLogin.id);
-  //   const fetchAPI = async () => {
-  //     const data = await staffApi.get(`staff?staff_id=${authLogin.id}`);
-  //     setFindStaff(data.staffs);
-  //   };
-  //   fetchAPI();
-  // }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const newErrors = findFormErrors();
+    console.log(Object.keys(newErrors))
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
@@ -105,10 +96,10 @@ const Login = () => {
       <Row className="mt-5">
         <Col sm={16}>
           <Form onSubmit={handleSubmit} style={{ fontSize: "20px" }}>
-            <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
+            <Form.Group className="mb-4 mt-3" controlId="formBasicEmail">
               <Form.Label>
-                User name
-                <BiUser className="icon-login1" size={20} />{" "}
+                User
+                &emsp;&emsp;&nbsp;<BiUser className="icon-login1" size={20} />{" "}
               </Form.Label>
               <Form.Control
                 type="text"
@@ -123,7 +114,7 @@ const Login = () => {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-5 mt-5" controlId="formBasicPassword">
+            <Form.Group className="mb-5 mt-3" controlId="formBasicPassword">
               <Form.Label>
                 Password
                 &nbsp;
@@ -144,10 +135,10 @@ const Login = () => {
             <div className="mb-3 modal-Login">
               <Button
                 type="submit"
-                style={{ width: "200px", marginLeft: '150px' }}
+                style={{ width: "150px", marginLeft: '70px' }}
                 variant="success"
               >
-                Submit form login
+                Submit login
               </Button>
             </div>
           </Form>

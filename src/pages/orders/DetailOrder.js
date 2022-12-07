@@ -24,15 +24,6 @@ function DetailOrder() {
     };
     fetchAPI();
   }, [order_id]);
-  console.log(order)
-  // let activeStepStatus = 1;
-  // if(orderStatus){
-  //   const lenghtStatus = orderStatus.length -1;
-  //   const check = orderStatus[lenghtStatus]?.status
-  //   if(check === 'Đã xác nhận' ) {
-  //     activeStepStatus = 2
-  //   }}
-  // }
 
   return (
     <Container>

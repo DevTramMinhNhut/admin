@@ -44,7 +44,7 @@ function CreateCategory() {
     setValidated(true);
         if(form.checkValidity() === true){
           event.preventDefault();
-          axios.post(`http://localhost:3000/categories/`, 
+          axios.post(`http://localhost:3000/category/`, 
           { 
             category_name: data.category_name,
             category_img: data.category_img
@@ -55,7 +55,7 @@ function CreateCategory() {
             }
           })
           .then(res => {
-            toast("Create category success", {
+            toast.success("Create category success", {
               position: "top-right",
               autoClose: 2000,
               hideProgressBar: false,

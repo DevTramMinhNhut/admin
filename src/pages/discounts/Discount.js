@@ -76,7 +76,7 @@ function Discounts() {
             {current.map((discount, index) => {
               return (
                 <tr key={index}>
-                  <td>{index + 1}</td>
+                  <td>{discount.discount_id}</td>
                   <td>{discount.product?.product_name}</td>
                   <td>
                     {moment(discount.discount?.discount_start)

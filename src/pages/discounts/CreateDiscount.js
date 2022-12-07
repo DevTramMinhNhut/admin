@@ -34,7 +34,20 @@ function CreateDiscount() {
   const [discountStart, setDiscountStart] = useState();
   const [discountEnd, setDiscountEnd] = useState();
 
+  const [errors, setErrors] = useState(false);
+
   const handleSubmit = async (event) => {
+    const date = new Date();
+    if (discountStart.toString() > date.toString()) {
+      setErrors(true);
+    }
+    if (discountEnd.toString() > date.toString()) {
+      setErrors(true);
+    }
+    if (discountStart < discountEnd) {
+      setErrors(true);
+    }
+
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -42,7 +55,7 @@ function CreateDiscount() {
     }
     setValidated(true);
 
-    if (form.checkValidity() === true && discountStart < discountEnd) {
+    if (form.checkValidity() === true && errors === false) {
       event.preventDefault();
       axios
         .post(`http://localhost:3000/discount/`, {
@@ -71,7 +84,7 @@ function CreateDiscount() {
         });
     } else {
       event.preventDefault();
-      toast.error("Create discount failed");
+      toast.error("Create discount failed!");
     }
   };
 
@@ -161,6 +174,13 @@ function CreateDiscount() {
                   placeholder="Discount start"
                   onChange={(e) => setDiscountStart(e.target.value)}
                 />
+                {errors === true ? (
+                  <Form.Control.Feedback type="invalid">
+                    Please enter the correct date
+                  </Form.Control.Feedback>
+                ) : (
+                  <></>
+                )}
               </Form.Group>
               <Form.Group as={Col} md="5" controlId="validationCustom03">
                 <Form.Label>Discount end</Form.Label>
@@ -171,6 +191,13 @@ function CreateDiscount() {
                   placeholder="Discount end"
                   onChange={(e) => setDiscountEnd(e.target.value)}
                 />
+                {errors === true ? (
+                  <Form.Control.Feedback type="invalid">
+                    Please enter the correct date
+                  </Form.Control.Feedback>
+                ) : (
+                  <></>
+                )}
               </Form.Group>
             </Row>
             <Button type="submit">Lưu</Button>

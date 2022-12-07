@@ -19,7 +19,7 @@ function UploadProduct() {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     const fetchAPI = async () => {
-      const data = await categoryApi.get("categories");
+      const data = await categoryApi.get("category");
       setCategories(data.categories);
     };
     fetchAPI();
@@ -107,7 +107,6 @@ function UploadProduct() {
     });
     if (form.checkValidity() === true) {
       event.preventDefault();
-      console.log(formData.get("product_name"));
       axios
         .put(`http://localhost:3000/product/${product_id}`, formData, {
           headers: {
@@ -115,7 +114,7 @@ function UploadProduct() {
           },
         })
         .then((res) => {
-          toast("Update product success", {
+          toast.success("Update product success", {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,

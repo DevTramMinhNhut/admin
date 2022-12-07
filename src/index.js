@@ -20,6 +20,7 @@ import Products from "./pages/products/Products";
 import CreateProduct from "./pages/products/CreateProduct";
 import UpdateProduct from "./pages/products/UpdateProduct";
 import DetailProduct from "./pages/products/DetailProduct";
+import Comment from "./pages/products/Comment";
 
 //discounts
 import Discounts from "./pages/discounts/Discount";
@@ -77,6 +78,10 @@ root.render(
             <Route
               path="/products/update-product/:product_id"
               element={<UpdateProduct />}
+            />
+            <Route
+              path="/products/:product_id/comment"
+              element={<Comment />}
             />
 
             <Route path="/staff" element={<Staff />} />

@@ -22,13 +22,19 @@ function Order() {
   const [checkOrder, setCheckOrder] = useState(true);
   const [checkOrderStatus, setCheckOrderStatus] = useState();
   const [checkOrderTotal, setCheckOrderTotal] = useState();
+  const [checkPayment, setCheckPayment] = useState();
   useEffect(() => {
     const fetchAPI = async () => {
       let data = {};
-      if (checkOrderStatus !== undefined) {
-        data = await orderApi.get(`order?order_status=${checkOrderStatus}&limit=999999`);
-      } else if (checkOrderTotal !== undefined) {
-        data = await orderApi.get(`order?order_total=${checkOrderTotal}&limit=999999`);
+
+      if (checkOrderTotal !== undefined) {
+        data = await orderApi.get(
+          `order?order_total=${checkOrderTotal}&limit=999999`
+        );
+      } else if (checkPayment !== undefined) {
+        data = await orderApi.get(
+          `order?order_payment=${checkPayment}&limit=999999`
+        );
       } else {
         data = await orderApi.get("order?limit=999999");
       }
@@ -37,9 +43,7 @@ function Order() {
       setLoading(false);
     };
     fetchAPI();
-  }, [checkOrder, checkOrderStatus, checkOrderTotal]);
-
-  console.log(orders);
+  }, [checkOrder, checkOrderStatus, checkOrderTotal, checkPayment]);
 
   const deleteOrder = (user_id) => {
     const agreeDelete = window.confirm(`bạn có muốn xóa user_id: ${user_id}`);
@@ -50,6 +54,7 @@ function Order() {
   };
 
   const statusOrder = (status, order_id) => {
+    console.log("a");
     const agreeDelete = window.confirm(
       `Do you want to update your order status ?`
     );
@@ -113,13 +118,24 @@ function Order() {
       <div className="data-table">
         <div className="data-table__heading">
           <span className="data-table__title">Order</span>
+
+          <Form.Select
+            onChange={(e) => setCheckPayment(e.target.value)}
+            className="mt-2"
+            size="sm"
+            style={{ width: "20%" }}
+          >
+            <option value="">Search by payment order </option>
+            <option value="Trực Tiếp">Direct payment</option>
+            <option value="Thanh toán online">Online payment</option>
+          </Form.Select>
           <Form.Select
             onChange={(e) => setCheckOrderTotal(e.target.value)}
             className="mt-2"
             size="sm"
-            style={{ width: "20%", marginLeft: "500px" }}
+            style={{ width: "20%" }}
           >
-            <option>Search by total order </option>
+            <option value="">Search by total order </option>
             <option value="1">Nhỏ hơn 100.000 </option>
             <option value="2">100.000 đến 500.000 </option>
             <option value="3">500.000 đến 1.000.000</option>
@@ -131,9 +147,10 @@ function Order() {
             size="sm"
             style={{ width: "20%" }}
           >
+            <option value="">Search by status order </option>
             <option value="Chưa xác nhận">Chưa xác nhận</option>
             <option value="Đã xác nhận">Đã xác nhận</option>
-            <option value="Hoàn thành đơn hàng">Hoàn thành đơn hàng</option>
+            <option value="Đã giao hàng">Đã giao hàng</option>
             <option value="Huỷ đơn">Huỷ đơn</option>
           </Form.Select>
         </div>
@@ -143,7 +160,6 @@ function Order() {
               <td>Id order</td>
               <td>Total</td>
               <td>Payment</td>
-              <td>Status</td>
               <td>Update status</td>
               <td>Date created</td>
               <td></td>
@@ -151,7 +167,8 @@ function Order() {
           </thead>
           <tbody>
             {current.map((order, index) => {
-              return (
+              return order.order_statuses[order.order_statuses.length - 1]
+                ?.status === checkOrderStatus || !checkOrderStatus ? (
                 <tr key={index}>
                   <td>{order.order_id}</td>
                   <td>
@@ -161,13 +178,7 @@ function Order() {
                     })}
                   </td>
                   <td>{order.order_payment}</td>
-                  <td>
-                    {
-                      order.order_statuses[order.order_statuses.length - 1]
-                        ?.status
-                    }
-                  </td>
-                  <td>
+                  <td style={{ width: "20%" }}>
                     <Form.Select
                       onChange={(e) =>
                         statusOrder(e.target.value, order.order_id)
@@ -182,14 +193,10 @@ function Order() {
                           <option disabled value="Đã xác nhận">
                             Đã xác nhận
                           </option>
-                          <option disabled value="Hoàn thành đơn hàng">
-                            Hoàn thành đơn hàng
+                          <option disabled value="Đã giao hàng">
+                            Đã giao hàng
                           </option>
-                          <option
-                            value="Huỷ đơn Admin"
-                            style={{ color: "red" }}
-                            readOnly
-                          >
+                          <option selected value="Huỷ đơn" disabled>
                             Huỷ đơn hàng
                           </option>
                         </>
@@ -199,15 +206,9 @@ function Order() {
                       {order.order_statuses[order.order_statuses.length - 1]
                         ?.status === "Chưa xác nhận" ? (
                         <>
-                          <option disabled>Chưa xác nhận</option>
+                          <option selected>Chưa xác nhận</option>
                           <option value="Đã xác nhận">Đã xác nhận</option>
-                          <option value="Hoàn thành">
-                            Hoàn thành đơn hàng
-                          </option>
-                          <option
-                            value="Huỷ đơn Admin"
-                            style={{ color: "red" }}
-                          >
+                          <option value="Huỷ đơn" style={{ color: "red" }}>
                             Huỷ đơn hàng
                           </option>
                         </>
@@ -218,38 +219,24 @@ function Order() {
                         ?.status === "Đã xác nhận" ? (
                         <>
                           <option disabled>Chưa xác nhận</option>
-                          <option disabled="Đã xác nhận">Đã xác nhận</option>
-                          <option value="Hoàn thành">
-                            Hoàn thành đơn hàng
+                          <option selected disabled>
+                            Đã xác nhận
                           </option>
-                          <option
-                            value="Huỷ đơn Admin"
-                            style={{ color: "red" }}
-                            disabled
-                          >
-                            Huỷ đơn hàng
-                          </option>
+                          <option value="Đã giao hàng">Đã giao hàng</option>
+                          <option disabled>Huỷ đơn hàng</option>
                         </>
                       ) : (
                         <></>
                       )}
                       {order.order_statuses[order.order_statuses.length - 1]
-                        ?.status === "Hoàn thành" ? (
+                        ?.status === "Đã giao hàng" ? (
                         <>
                           <option disabled>Chưa xác nhận</option>
-                          <option disabled value="Đã xác nhận">
-                            Đã xác nhận
+                          <option disabled>Đã xác nhận</option>
+                          <option selected disabled>
+                            Đã giao hàng
                           </option>
-                          <option disabled value="Hoàn thành đơn hàng">
-                            Hoàn thành đơn hàng
-                          </option>
-                          <option
-                            value="Huỷ đơn Admin"
-                            style={{ color: "red" }}
-                            disabled
-                          >
-                            Huỷ đơn hàng
-                          </option>
+                          <option disabled>Huỷ đơn hàng</option>
                         </>
                       ) : (
                         <></>
@@ -257,9 +244,7 @@ function Order() {
                     </Form.Select>
                   </td>
                   <td>
-                    {moment(order.createdAt.createdAt)
-                      .utc()
-                      .format("DD-MM-YYYY H:mm:ss")}
+                    {moment(order.createdAt).utc().format("DD-MM-YYYY H:mm:ss")}
                   </td>
                   <td style={{ width: "10%" }}>
                     <OverlayTrigger
@@ -290,11 +275,13 @@ function Order() {
                     </OverlayTrigger>
                   </td>
                 </tr>
+              ) : (
+                <></>
               );
             })}
           </tbody>
         </Table>
-        {orders.length > 0 ? (
+        {orders.length > 7 ? (
           <CheckPagination
             postsPerPage={perPage}
             totalPosts={orders.length}

@@ -39,7 +39,7 @@ function Featured() {
           />
         </div>
         <p className="tile">
-          Total sales made date {date.getDate()}/{date.getMonth()} <br /> Target:{" "}
+          Total sales made date {date.getDate()}/{date.getMonth()+1} <br /> Target:{" "}
           {target.toLocaleString("vi", {
             style: "currency",
             currency: "VND",

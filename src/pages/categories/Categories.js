@@ -15,7 +15,7 @@ import {
 import { GrUpdate } from "react-icons/gr";
 import { AiOutlineSearch, AiTwotoneDelete } from "react-icons/ai";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import CheckPagination from "../../components/Pagination/CheckPagination";
 import moment from "moment/moment";
 
@@ -28,9 +28,11 @@ function Categories() {
     const fetchAPI = async () => {
       let data;
       if (searchName !== undefined) {
-        data = await categoryApi.get(`categories?category_name=${searchName}&?limit=100`);
+        data = await categoryApi.get(
+          `category?category_name=${searchName}&?limit=100`
+        );
       } else {
-        data = await categoryApi.get("categories");
+        data = await categoryApi.get("category?limit=100");
       }
       setCategories(data.categories);
       setLoading(false);
@@ -44,15 +46,23 @@ function Categories() {
       `Do you want to delete category id Do you want to delete staff not ??`
     );
     if (agreeDelete) {
-      axios.delete(`http://localhost:3000/categories/${category_id}`);
-      toast.success("Delete category successfully");
+      axios.delete(`http://localhost:3000/category/${category_id}`);
+      toast.success("Delete category successfully", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
       setDeletC(true);
     }
     return 0;
   };
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage] = useState(4);
+  const [perPage] = useState(5);
   // Get current
   const indexOfLast = currentPage * perPage;
   const indexOfFirst = indexOfLast - perPage;
@@ -99,7 +109,7 @@ function Categories() {
               <td>img</td>
               <td>Created_at</td>
               <td>Updated_at</td>
-              <td className="data-table__heading--manipulation">Thao tác</td>
+              <td className="data-table__heading--manipulation"></td>
             </tr>
           </thead>
           <tbody>
@@ -166,6 +176,7 @@ function Categories() {
             })}
           </tbody>
         </Table>
+        <ToastContainer />
         {categories.length > 6 ? (
           <CheckPagination
             postsPerPage={perPage}
